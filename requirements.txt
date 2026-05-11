@@ -14,3 +14,4 @@ transformers
 torch
 mlflow
 shap
+huggingface_hub

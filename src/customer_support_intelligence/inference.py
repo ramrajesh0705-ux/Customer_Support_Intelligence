@@ -2,7 +2,10 @@ from pathlib import Path
 import joblib
 import pandas as pd
 from typing import Dict
+from huggingface_hub import hf_hub_download
 from .data import build_ticket_text
+
+MODEL_REPO = "rajesh7593/customersupportintelligence-models"
 
 MODEL_FILENAMES = {
     'ticket_type': 'ticket_type.joblib',
@@ -12,11 +15,10 @@ MODEL_FILENAMES = {
 
 
 class TicketInference:
-    def __init__(self, model_dir: Path):
-        self.model_dir = Path(model_dir)
-        self.ticket_type_model = joblib.load(self.model_dir / MODEL_FILENAMES['ticket_type'])
-        self.priority_model = joblib.load(self.model_dir / MODEL_FILENAMES['ticket_priority'])
-        self.resolution_model = joblib.load(self.model_dir / MODEL_FILENAMES['resolution_time'])
+    def __init__(self, model_dir: Path = None):
+        self.ticket_type_model = joblib.load(hf_hub_download(MODEL_REPO, MODEL_FILENAMES['ticket_type']))
+        self.priority_model = joblib.load(hf_hub_download(MODEL_REPO, MODEL_FILENAMES['ticket_priority']))
+        self.resolution_model = joblib.load(hf_hub_download(MODEL_REPO, MODEL_FILENAMES['resolution_time']))
 
     def _prepare_input(self, payload: Dict) -> pd.DataFrame:
         item = {

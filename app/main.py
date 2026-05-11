@@ -6,11 +6,9 @@ import streamlit as st
 from pathlib import Path
 from src.customer_support_intelligence.inference import TicketInference
 
-MODEL_DIR = Path(__file__).resolve().parent.parent / 'models'
-
 @st.cache_resource
 def load_predictor():
-    return TicketInference(MODEL_DIR)
+    return TicketInference()
 
 predictor = load_predictor()
 
