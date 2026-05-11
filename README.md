@@ -1,7 +1,19 @@
+---
+title: Customer Support Intelligence
+emoji: 🎯
+colorFrom: blue
+colorTo: purple
+sdk: streamlit
+sdk_version: "1.57.0"
+python_version: "3.9"
+app_file: app/main.py
+pinned: false
+---
+
 # AI-Powered Customer Support Intelligence Platform
 
 This repository contains an end-to-end customer support intelligence application.
-It includes synthetic dataset generation, model training pipelines for ticket classification, priority prediction, and resolution time estimation, and a FastAPI inference service.
+It includes synthetic dataset generation, model training pipelines for ticket classification, priority prediction, and resolution time estimation, and a Streamlit inference application.
 
 ## Features
 - Synthetic customer support ticket dataset generator
@@ -9,14 +21,15 @@ It includes synthetic dataset generation, model training pipelines for ticket cl
 - Ticket type classification with Logistic Regression
 - Ticket priority prediction with Random Forest
 - Resolution time regression with Gradient Boosting
-- FastAPI inference endpoint for production use
+- Streamlit web application for interactive predictions
+- Git LFS support for large model files
 - Docker containerization for deployment
 
 ## Project Structure
 - `data/sample_data_generator.py` — create sample ticket dataset for development
 - `train.py` — train models and save artifacts into `models/`
 - `predict.py` — local CLI prediction example
-- `app/main.py` — FastAPI application for inference
+- `app/main.py` — Streamlit application for inference
 - `src/customer_support_intelligence/` — reusable preprocessing, model, and inference modules
 
 ## Getting Started
