@@ -2,7 +2,7 @@ fastapi
 uvicorn[standard]
 scikit-learn==1.6.1
 pandas<=2.0.0
-numpy==1.24.3
+numpy>=2.0.0,<3.0.0
 joblib
 python-dateutil
 lightgbm>=4.0.0
