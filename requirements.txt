@@ -1,8 +1,8 @@
 fastapi
 uvicorn[standard]
 scikit-learn==1.6.1
-pandas
-numpy
+pandas<=2.0.0
+numpy<2.0.0
 joblib
 python-dateutil
 lightgbm
@@ -10,7 +10,7 @@ scipy
 matplotlib
 seaborn
 plotly
-transformers
+transformers<=4.35.0
 torch
-mlflow
+mlflow<=2.8.0
 shap

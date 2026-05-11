@@ -2,7 +2,11 @@ from pathlib import Path
 import joblib
 import pandas as pd
 from typing import Dict
+import warnings
 from .data import build_ticket_text
+
+# Suppress sklearn version warnings that don't affect functionality
+warnings.filterwarnings('ignore', category=UserWarning, message='.*Trying to unpickle estimator.*')
 
 MODEL_FILENAMES = {
     'ticket_type': 'ticket_type.joblib',
@@ -14,9 +18,12 @@ MODEL_FILENAMES = {
 class TicketInference:
     def __init__(self, model_dir: Path):
         self.model_dir = Path(model_dir)
-        self.ticket_type_model = joblib.load(self.model_dir / MODEL_FILENAMES['ticket_type'])
-        self.priority_model = joblib.load(self.model_dir / MODEL_FILENAMES['ticket_priority'])
-        self.resolution_model = joblib.load(self.model_dir / MODEL_FILENAMES['resolution_time'])
+        try:
+            self.ticket_type_model = joblib.load(self.model_dir / MODEL_FILENAMES['ticket_type'])
+            self.priority_model = joblib.load(self.model_dir / MODEL_FILENAMES['ticket_priority'])
+            self.resolution_model = joblib.load(self.model_dir / MODEL_FILENAMES['resolution_time'])
+        except Exception as e:
+            raise RuntimeError(f'Failed to load models from {self.model_dir}: {e}')
 
     def _prepare_input(self, payload: Dict) -> pd.DataFrame:
         item = {
