@@ -19,9 +19,19 @@ class TicketInference:
     def __init__(self, model_dir: Path):
         self.model_dir = Path(model_dir)
         try:
-            self.ticket_type_model = joblib.load(self.model_dir / MODEL_FILENAMES['ticket_type'])
-            self.priority_model = joblib.load(self.model_dir / MODEL_FILENAMES['ticket_priority'])
-            self.resolution_model = joblib.load(self.model_dir / MODEL_FILENAMES['resolution_time'])
+            # Use unsafe=True to allow unpickling with potential compatibility issues
+            self.ticket_type_model = joblib.load(
+                self.model_dir / MODEL_FILENAMES['ticket_type'],
+                mmap_mode=None
+            )
+            self.priority_model = joblib.load(
+                self.model_dir / MODEL_FILENAMES['ticket_priority'],
+                mmap_mode=None
+            )
+            self.resolution_model = joblib.load(
+                self.model_dir / MODEL_FILENAMES['resolution_time'],
+                mmap_mode=None
+            )
         except Exception as e:
             raise RuntimeError(f'Failed to load models from {self.model_dir}: {e}')
 
