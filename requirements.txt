@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+scikit-learn
+pandas
+numpy
+joblib
+python-dateutil
+lightgbm
+scipy
+matplotlib
+seaborn
+plotly
+transformers
+torch
+mlflow
+shap
