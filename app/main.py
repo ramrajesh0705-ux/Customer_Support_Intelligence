@@ -1,38 +1,41 @@
-from pathlib import Path
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
-from src.customer_support_intelligence.inference import TicketInference
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-app = FastAPI(title='Customer Support Intelligence API')
+import streamlit as st
+from pathlib import Path
+from src.customer_support_intelligence.inference import TicketInference
 
 MODEL_DIR = Path(__file__).resolve().parent.parent / 'models'
 
-class TicketRequest(BaseModel):
-    ticket_subject: str = Field(..., example='Unable to access billing page')
-    ticket_description: str = Field(..., example='I cannot update my credit card details on the portal.')
-    ticket_channel: str = Field('Email', example='Email')
-    product_purchased: str = Field('Cloud CRM', example='Cloud CRM')
-    customer_age: int = Field(30, example=30)
-    customer_gender: str = Field('Female', example='Female')
-    date_of_purchase: str = Field('2025-08-15', example='2025-08-15')
-    first_response_time: float = Field(1.2, example=1.2)
+@st.cache_resource
+def load_predictor():
+    return TicketInference(MODEL_DIR)
 
-@app.on_event('startup')
-def load_models():
-    global predictor
-    try:
-        predictor = TicketInference(MODEL_DIR)
-    except Exception as exc:
-        raise RuntimeError(f'Failed to load models: {exc}')
+predictor = load_predictor()
 
-@app.get('/health')
-def health_check():
-    return {'status': 'ok'}
+st.title('Customer Support Intelligence')
 
-@app.post('/predict')
-def predict(request: TicketRequest):
-    try:
-        result = predictor.predict(request.dict())
-        return result
-    except Exception as exc:
-        raise HTTPException(status_code=500, detail=str(exc))
+ticket_subject = st.text_input('Ticket Subject', 'Unable to access billing page')
+ticket_description = st.text_area('Ticket Description', 'I cannot update my credit card details on the portal.')
+ticket_channel = st.selectbox('Ticket Channel', ['Email', 'Phone', 'Chat'])
+product_purchased = st.selectbox('Product Purchased', ['Cloud CRM', 'ERP System', 'HR Software'])
+customer_age = st.number_input('Customer Age', min_value=18, max_value=100, value=30)
+customer_gender = st.selectbox('Customer Gender', ['Male', 'Female', 'Other'])
+date_of_purchase = st.date_input('Date of Purchase')
+first_response_time = st.number_input('First Response Time (hours)', min_value=0.0, value=1.2)
+
+if st.button('Predict'):
+    sample = {
+        'ticket_subject': ticket_subject,
+        'ticket_description': ticket_description,
+        'ticket_channel': ticket_channel,
+        'product_purchased': product_purchased,
+        'customer_age': customer_age,
+        'customer_gender': customer_gender,
+        'date_of_purchase': str(date_of_purchase),
+        'first_response_time': first_response_time,
+    }
+    result = predictor.predict(sample)
+    st.write('Prediction Result:')
+    st.json(result)
