@@ -1,13 +1,13 @@
 fastapi
 uvicorn[standard]
 streamlit==1.57.0
-scikit-learn==1.6.1
-numpy==1.26.4
+scikit-learn==1.3.2
+numpy==1.24.4
 pandas==2.0.3
-joblib
+joblib==1.3.2
 python-dateutil
 lightgbm>=4.0.0
-scipy
+scipy==1.11.4
 matplotlib
 seaborn
 plotly
