@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Dev/AIML/CustomerSupport/mlruns/778948104852201704/86dca633667e4df8acf9cedfe403d851/artifacts
+end_time: 1778552137725
+entry_point_name: ''
+experiment_id: '778948104852201704'
+lifecycle_stage: active
+run_id: 86dca633667e4df8acf9cedfe403d851
+run_name: carefree-auk-370
+run_uuid: 86dca633667e4df8acf9cedfe403d851
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1778552126919
+status: 3
+tags: []
+user_id: ramra

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Dev/AIML/CustomerSupport/mlruns/778948104852201704/d7bdc807e08642948fe7081090d60455/artifacts
+end_time: 1778552126609
+entry_point_name: ''
+experiment_id: '778948104852201704'
+lifecycle_stage: active
+run_id: d7bdc807e08642948fe7081090d60455
+run_name: baseline
+run_uuid: d7bdc807e08642948fe7081090d60455
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1778552043619
+status: 3
+tags: []
+user_id: ramra

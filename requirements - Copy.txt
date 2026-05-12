@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+streamlit==1.57.0
+scikit-learn==1.6.1
+numpy==1.26.4
+pandas==2.0.3
+joblib
+python-dateutil
+lightgbm>=4.0.0
+scipy
+matplotlib
+seaborn
+plotly
+transformers<=4.35.0
+torch
+mlflow<=2.8.0
+shap
