@@ -1,8 +1,9 @@
 fastapi
 uvicorn[standard]
+streamlit==1.57.0
 scikit-learn==1.6.1
-pandas<=2.0.0
-numpy>=2.0.0,<3.0.0
+numpy==2.0.0
+pandas==2.1.0
 joblib
 python-dateutil
 lightgbm>=4.0.0
