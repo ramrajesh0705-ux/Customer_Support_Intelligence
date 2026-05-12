@@ -15,3 +15,4 @@ transformers<=4.35.0
 torch
 mlflow<=2.8.0
 shap
+wordcloud

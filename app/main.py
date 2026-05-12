@@ -1,41 +1,55 @@
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-
 import streamlit as st
-from pathlib import Path
-from src.customer_support_intelligence.inference import TicketInference
 
-MODEL_DIR = Path(__file__).resolve().parent.parent / 'models'
+st.set_page_config(page_title="Customer Support Intelligence", page_icon="📊")
 
-@st.cache_resource
-def load_predictor():
-    return TicketInference(MODEL_DIR)
+st.title("🏠 Customer Support Intelligence Dashboard")
 
-predictor = load_predictor()
+st.markdown("""
+## Project Overview
 
-st.title('Customer Support Intelligence')
+Welcome to the **Customer Support Intelligence** system! This AI-powered platform helps analyze and predict customer support ticket outcomes to improve response times and customer satisfaction.
 
-ticket_subject = st.text_input('Ticket Subject', 'Unable to access billing page')
-ticket_description = st.text_area('Ticket Description', 'I cannot update my credit card details on the portal.')
-ticket_channel = st.selectbox('Ticket Channel', ['Email', 'Phone', 'Chat'])
-product_purchased = st.selectbox('Product Purchased', ['Cloud CRM', 'ERP System', 'HR Software'])
-customer_age = st.number_input('Customer Age', min_value=18, max_value=100, value=30)
-customer_gender = st.selectbox('Customer Gender', ['Male', 'Female', 'Other'])
-date_of_purchase = st.date_input('Date of Purchase')
-first_response_time = st.number_input('First Response Time (hours)', min_value=0.0, value=1.2)
+### Key Features
 
-if st.button('Predict'):
-    sample = {
-        'ticket_subject': ticket_subject,
-        'ticket_description': ticket_description,
-        'ticket_channel': ticket_channel,
-        'product_purchased': product_purchased,
-        'customer_age': customer_age,
-        'customer_gender': customer_gender,
-        'date_of_purchase': str(date_of_purchase),
-        'first_response_time': first_response_time,
-    }
-    result = predictor.predict(sample)
-    st.write('Prediction Result:')
-    st.json(result)
+🔍 **Exploratory Data Analysis (EDA)**: Dive deep into ticket data with interactive visualizations and insights.
+
+🎯 **Predictive Analytics**: Predict ticket type, priority, and resolution time using machine learning models.
+
+📈 **Performance Monitoring**: Track key metrics and model performance over time.
+
+### How It Works
+
+1. **Data Collection**: Customer support tickets are collected with details like subject, description, channel, and customer information.
+
+2. **Preprocessing**: Text data is cleaned and transformed, categorical variables are encoded.
+
+3. **Model Training**: Multiple ML models are trained for different prediction tasks:
+   - Ticket Type Classification
+   - Priority Prediction
+   - Resolution Time Estimation
+
+4. **Inference**: Real-time predictions for new tickets to optimize support workflows.
+
+### Technologies Used
+
+- **Machine Learning**: LightGBM, Scikit-learn, Transformers
+- **Data Processing**: Pandas, NumPy
+- **Visualization**: Matplotlib, Seaborn, Plotly
+- **Web Framework**: Streamlit
+- **Experiment Tracking**: MLflow
+
+Navigate to the sidebar to explore the EDA dashboard or make predictions!
+""")
+
+# Add some statistics or quick overview
+st.subheader("Quick Stats")
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("Models Deployed", "3", "Active")
+
+with col2:
+    st.metric("Prediction Types", "3", "Available")
+
+with col3:
+    st.metric("Data Points", "1000+", "Processed")
